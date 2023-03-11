@@ -1,13 +1,5 @@
-import express from "express";
-import bodyParser from "body-parser";
-import productsRoutes from "./products/routes.js";
+import app from './app.js';
 
-const app = express();
-const PORT = 8000;
+const PORT = 8000
 
-app.use(bodyParser.json());
-app.use("/products", productsRoutes);
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`server running on port ${PORT}`))

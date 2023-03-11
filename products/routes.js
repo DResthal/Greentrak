@@ -14,24 +14,32 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   let product = await prisma.product.findFirst({
-    where: { id },
+    where: { id: Number(id) },
   });
+  res.status(200);
   res.send(product);
 });
 
 // Add one
 router.post("/", async (req, res) => {
-  let { name, germination, harvest, seedCost } = req.body;
-  const product = await prisma.product.create({
-    data: {
-      name,
-      germination,
-      harvest,
-      seedCost,
-    },
-  });
-  res.json(product);
-});
+  const { name, germination, harvest, seedCost } = req.body;
+  console.log(req.body);
+  try {
+    await prisma.product.create({
+      data: {
+        name,
+        germination,
+        harvest,
+        seedCost
+      }
+    });
+    res.status(201).json({message: "Product created"})
+  } catch (e) {
+    if (e.code === "P2002") {
+      res.status(400).json({message: `Product ${name} already exists.`});
+    }
+  }
+})
 
 // Update one
 router.put("/:id", async (req, res) => {
