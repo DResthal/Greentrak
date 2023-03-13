@@ -1,13 +1,9 @@
 import express from "express";
 import bodyParser from "body-parser";
-import productsRoutes from "./products/routes.js";
-import clientRoutes from "./clients/routes.js";
-
+import productRoutes from "./products/routes";
+import clientRoutes from "./clients/routes";
 const app = express();
-const PORT = 8000;
-
 app.use(bodyParser.json());
-app.use("/products", productsRoutes);
+app.use("/products", productRoutes);
 app.use("/clients", clientRoutes);
-
 export default app;

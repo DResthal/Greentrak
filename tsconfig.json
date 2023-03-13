@@ -1,0 +1,14 @@
+{
+   "compilerOptions": {
+      "outDir": "./disconnectForeground",
+      "allowJs": true,
+      "target": "es6",
+      "allowSyntheticDefaultImports": true,
+      "moduleResolution": "node",
+      "esModuleInterop": true
+   },
+   "ts-node": {
+      "esm": true
+   },
+   "include" : ["./src/**/*"]
+}

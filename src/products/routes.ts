@@ -1,19 +1,19 @@
-import express from "express";
+import express, { Router } from "express";
 import { PrismaClient } from "@prisma/client";
 
-const router = express.Router();
+const router = Router();
 const prisma = new PrismaClient();
 
 // Get all
 router.get("/", async (req, res) => {
-  let products = await prisma.product.findMany();
+  const products = await prisma.product.findMany();
   res.json(products);
 });
 
 // Get one
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  let product = await prisma.product.findFirst({
+  const product = await prisma.product.findFirst({
     where: { id: Number(id) },
   });
   res.status(200);
@@ -30,20 +30,20 @@ router.post("/", async (req, res) => {
         name,
         germination,
         harvest,
-        seedCost
-      }
+        seedCost,
+      },
     });
-    res.status(201).json({message: "Product created"})
+    res.status(201).json({ message: "Product created" });
   } catch (e) {
     if (e.code === "P2002") {
-      res.status(400).json({message: `Product ${name} already exists.`});
+      res.status(400).json({ message: `Product ${name} already exists.` });
     }
   }
-})
+});
 
 // Update one
 router.put("/:id", async (req, res) => {
-  let { id, name, germination, harvest, seedCost } = req.body;
+  const { id, name, germination, harvest, seedCost } = req.body;
   const product = await prisma.product.update({
     where: { id: Number(id) },
     data: {
@@ -58,7 +58,7 @@ router.put("/:id", async (req, res) => {
 
 // Delete one
 router.delete("/:id", async (req, res) => {
-  let { id } = req.params;
+  const { id } = req.params;
   const product = await prisma.product.delete({
     where: {
       id: Number(id),
