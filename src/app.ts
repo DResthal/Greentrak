@@ -9,4 +9,4 @@ app.use(bodyParser.json());
 app.use("/products", productRoutes);
 app.use("/clients", clientRoutes);
 
-export default app;
+module.exports = app;
